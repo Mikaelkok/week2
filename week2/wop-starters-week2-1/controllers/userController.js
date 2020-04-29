@@ -11,21 +11,14 @@ const user_list_get = async (req, res) => {
 const user_get = async (req, res) => {
     console.log('user id parameter', req.params);
     const user = await userModel.getUser(req.params.id);
-	delete user.password;
+	delete user.passwd;
     res.json(user);
 };
 
 const user_post = async (req, res) => {
-    console.log('user_post', req.body, req.file);
-	const inUser = {
-		name: req.body.name,
-		age: req.body.age,
-		weight: req.body.weight,
-		owner: req.body.owner,
-		filename: req.file.filename,
-		};
+    console.log('user_post', req.body);
 		try {
-			const user = await userModel.insertUser(inUser);
+			const user = await userModel.insertUser(req.body);
 			console.log('inserted', user);
 			res.send(`added user: ${user.insertId}`);
 		} catch (e) {
