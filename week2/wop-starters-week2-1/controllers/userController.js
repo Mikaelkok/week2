@@ -11,6 +11,7 @@ const user_list_get = async (req, res) => {
 const user_get = async (req, res) => {
     console.log('user id parameter', req.params);
     const user = await userModel.getUser(req.params.id);
+	delete user.password;
     res.json(user);
 };
 
