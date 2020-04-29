@@ -2,20 +2,22 @@
 // userRoute
 const express = require('express');
 const router = express.Router();
-const catController = require('../controllers/userController');
+const multer = require('multer');
+const upload = multer({dest: './uploads/);
+const userController = require('../controllers/userController');
 
-router.get('/', userController.cat_list_get);
+router.get('/', userController.user_list_get);
 
-router.get('/:id', userController.cat_get);
+router.get('/:id', userController.user_get);
 
-router.post('/', (req, res) =>{
-    res.send('with this endpoint you can add cats');
+router.post('/', upload.single('user'), (req, res) =>{
+	console.log('tiedosto: ', req.file);
+	userController.user_post(req, res);
+    //res.send('with this endpoint you can add users');
 });
 
-router.put('/', (req, res) =>{
-    res.send('with this endpoint you can add cats');
-});
+router.put('/', userController.user_put);
 
-router.delete('/', (req, res) => {
-    res.send('with this endpoint you can delete cats');
-});
+router.delete('/:id', userController.user_delete);
+
+module.exports = router;
